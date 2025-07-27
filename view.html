@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Suppliers | Fresh Connect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success px-4">
+    <a class="navbar-brand fw-bold fs-3" href="#"> Fresh Connect</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="view.html">View Suppliers</a></li>
+        <li class="nav-item"><a class="nav-link" href="add.html">Add Supplier</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Hidden Admin Upload Button -->
+<button id="uploadSuppliersBtn" style="display:none;">Upload Sample Suppliers</button>
+
+
+<script>
+  // Make sure Firebase is initialized here
+  const db = firebase.firestore();
+
+  // Sample dataset of suppliers
+  const suppliers = [
+    {
+      name: "Ramesh Kirana Store",
+      location: "Pune",
+      product: "Wheat Flour",
+      price: 30,
+      contact: "9876543210"
+    },
+    {
+      name: "Annapurna Veggies",
+      location: "Mumbai",
+      product: "Tomatoes",
+      price: 20,
+      contact: "9876543211"
+    },
+    {
+      name: "FreshFarm Wholesale",
+      location: "Nagpur",
+      product: "Cooking Oil",
+      price: 110,
+      contact: "9876543212"
+    },
+    {
+      name: "Shivaji Provisions",
+      location: "Nashik",
+      product: "Spices",
+      price: 50,
+      contact: "9876543213"
+    },
+    {
+      name: "Organic Cart",
+      location: "Ahmednagar",
+      product: "Rice",
+      price: 45,
+      contact: "9876543214"
+    }
+  ];
+
+  // Upload function
+  document.getElementById("uploadSuppliersBtn").addEventListener("click", function () {
+    suppliers.forEach((supplier) => {
+      db.collection("suppliers").add(supplier)
+        .then(() => {
+          console.log("Supplier added:", supplier.name);
+        })
+        .catch((error) => {
+          console.error("Error adding supplier:", error);
+        });
+    });
+    alert("Sample suppliers uploaded to Firestore.");
+  });
+
+  // TEMP: Show button if you are the developer (optional password)
+  window.onload = () => {
+    const secret = prompt("Enter admin password:");
+    if (secret === "admin123") {
+      document.getElementById("uploadSuppliersBtn").style.display = "block";
+    }
+  };
+</script>
+
+
+  <!-- Footer -->
+  <footer class="bg-light text-center text-muted py-3 mt-5">
+    💚 Team Fresh_Connect
+  </footer>
+
+  <!-- Firebase + JS later -->
+
+</body>
+</html>
